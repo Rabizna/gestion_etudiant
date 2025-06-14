@@ -13,11 +13,11 @@
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="30"/>
         </Style>
         <Style TargetType="DatePicker">
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="30"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="Margin" Value="5"/>
@@ -123,7 +123,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 

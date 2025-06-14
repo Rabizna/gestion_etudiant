@@ -12,18 +12,43 @@ namespace gestion_etudiant.Services
 
         public DatabaseService()
         {
-            // Modifiez cette chaîne de connexion selon votre configuration
-            connectionString = "Host=localhost;Database=etudiant_db;Username=localhost;Password=MOODkyle35";
+            connectionString = "Host=localhost;Database=etudiant_db;Username=postgres;Password=261103";
+            InitialiserBase();
         }
 
         public DatabaseService(string connectionString)
         {
             this.connectionString = connectionString;
+            InitialiserBase();
         }
 
         private NpgsqlConnection GetConnection()
         {
             return new NpgsqlConnection(connectionString);
+        }
+
+        public void InitialiserBase()
+        {
+            string query = @"
+                CREATE TABLE IF NOT EXISTS etudiants (
+                    id SERIAL PRIMARY KEY,
+                    nom VARCHAR(100),
+                    prenom VARCHAR(100),
+                    email VARCHAR(150),
+                    date_naissance DATE,
+                    telephone VARCHAR(20),
+                    adresse TEXT,
+                    date_creation TIMESTAMP NOT NULL DEFAULT NOW()
+                );";
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         // Créer un étudiant
@@ -57,7 +82,6 @@ namespace gestion_etudiant.Services
             }
         }
 
-        // Lire tous les étudiants
         public List<Etudiant> ObtenirTousLesEtudiants()
         {
             List<Etudiant> etudiants = new List<Etudiant>();
@@ -87,7 +111,6 @@ namespace gestion_etudiant.Services
             return etudiants;
         }
 
-        // Lire un étudiant par ID
         public Etudiant ObtenirEtudiantParId(int id)
         {
             try
@@ -118,7 +141,6 @@ namespace gestion_etudiant.Services
             return null;
         }
 
-        // Mettre à jour un étudiant
         public bool MettreAJourEtudiant(Etudiant etudiant)
         {
             try
@@ -156,7 +178,6 @@ namespace gestion_etudiant.Services
             }
         }
 
-        // Supprimer un étudiant
         public bool SupprimerEtudiant(int id)
         {
             try
@@ -180,7 +201,6 @@ namespace gestion_etudiant.Services
             }
         }
 
-        // Rechercher des étudiants
         public List<Etudiant> RechercherEtudiants(string terme)
         {
             List<Etudiant> etudiants = new List<Etudiant>();
@@ -217,7 +237,6 @@ namespace gestion_etudiant.Services
             return etudiants;
         }
 
-        // Tester la connexion
         public bool TesterConnexion()
         {
             try
@@ -234,7 +253,6 @@ namespace gestion_etudiant.Services
             }
         }
 
-        // Correction du mapping dans la méthode MapperEtudiant
         private Etudiant MapperEtudiant(NpgsqlDataReader reader)
         {
             return new Etudiant
