@@ -234,19 +234,19 @@ namespace gestion_etudiant.Services
             }
         }
 
-        // Mapper les données du reader vers un objet Etudiant
+        // Correction du mapping dans la méthode MapperEtudiant
         private Etudiant MapperEtudiant(NpgsqlDataReader reader)
         {
             return new Etudiant
             {
-                Id = reader.GetInt32("id"),
-                Nom = reader.IsDBNull("nom") ? null : reader.GetString("nom"),
-                Prenom = reader.IsDBNull("prenom") ? null : reader.GetString("prenom"),
-                Email = reader.IsDBNull("email") ? null : reader.GetString("email"),
-                DateNaissance = reader.IsDBNull("date_naissance") ? (DateTime?)null : reader.GetDateTime("date_naissance"),
-                Telephone = reader.IsDBNull("telephone") ? null : reader.GetString("telephone"),
-                Adresse = reader.IsDBNull("adresse") ? null : reader.GetString("adresse"),
-                DateCreation = reader.GetDateTime("date_creation")
+                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                Nom = reader.IsDBNull(reader.GetOrdinal("nom")) ? null : reader.GetString(reader.GetOrdinal("nom")),
+                Prenom = reader.IsDBNull(reader.GetOrdinal("prenom")) ? null : reader.GetString(reader.GetOrdinal("prenom")),
+                Email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader.GetString(reader.GetOrdinal("email")),
+                DateNaissance = reader.IsDBNull(reader.GetOrdinal("date_naissance")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("date_naissance")),
+                Telephone = reader.IsDBNull(reader.GetOrdinal("telephone")) ? null : reader.GetString(reader.GetOrdinal("telephone")),
+                Adresse = reader.IsDBNull(reader.GetOrdinal("adresse")) ? null : reader.GetString(reader.GetOrdinal("adresse")),
+                DateCreation = reader.GetDateTime(reader.GetOrdinal("date_creation"))
             };
         }
     }
